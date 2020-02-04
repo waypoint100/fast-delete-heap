@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+group 'org.et'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.11
+
+dependencies {
+    testCompile group: 'org.testng', name: 'testng', version: '6.14.3'
+}
+
+wrapper {
+    gradleVersion = "5.4.1"
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+test { //this is the gradle task to be executed
+    useTestNG() { //Tells Gradle to use TestNG
+    }
+    beforeTest {
+        descriptor -> logger.lifecycle("Running test: " + descriptor)
+    }
+    testLogging {
+        exceptionFormat 'full'
+        testLogging { events 'skipped', 'failed', 'standardError' }
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                print "Results: ${result.resultType} (${result.testCount} tests,"
+                print " ${result.successfulTestCount} successes,"
+                print " ${result.failedTestCount} failures,"
+                println " ${result.skippedTestCount} skipped)"
+            }
+        }
+    }
+}
