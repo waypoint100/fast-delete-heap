@@ -2,7 +2,7 @@
 Priority queue / heap implementation which allows fast O(log N) random deletes.
 
 Java's standard PriorityQueue has O(N) deletion, which makes it pretty inefficient in case
-if queue is large and there is a lot of delete operations.
+of large queue a lot of delete operations.
 
 To allow fast deletes, this implementation maintains an extra item-to-heap-index map, which slows down
 inserts a bit.
@@ -10,6 +10,9 @@ inserts a bit.
 Base heap implementation is inspired by https://algs4.cs.princeton.edu/24pq/
 
 #### PriorityQueue vs FastDeletePriorityQueue benchmark:
+Two tests:
+* **insert** N integers
+* **delete** all N integers
 
 **op**|**impl**|**10K**|**100K**|**200K**|**1M**
 :-----:|:-----:|:-----:|:-----:|:-----:|:-----:
