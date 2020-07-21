@@ -8,10 +8,14 @@ import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 /**
- *
- * @param <E>
+ * Priority queue / heap implementation which allows fast O(log N) deletions.<p>
+ * Java's standard {@link java.util.PriorityQueue} has O(N) deletion, which makes it pretty inefficient in case
+ * if queue is large and there is a lot of delete operations.<p>
+ * To allow fast deletions, this class maintains an extra item-to-heap-index map, which slows down inserts a bit.
+ * See performance comparison chart for details.
+ * @param <E> type of elements in the queue.
  */
-public class FastDeletePriorityQueue<E> {
+public final class FastDeletePriorityQueue<E> {
     private E[] items; // stores items at indices 1 to n, starts at 1 to simplify heap operations
     private int size = 0; // number of items in the queue
     private final Map<E, Integer> itemToIndex = new HashMap<>(); //extra map to allow fast O(log n) random deletes
@@ -28,7 +32,7 @@ public class FastDeletePriorityQueue<E> {
         this.comparator = comparator;
     }
 
-    public int getSize() {
+    public int size() {
         return size;
     }
 
